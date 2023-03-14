@@ -1,6 +1,7 @@
 #include "BigBoyInclude.h"
 
 // declares 16 buttons on D22 to D52 only on pair pin number (D22, D24, D26, D28, D30, D32, D34, D36, D38, D40, D42, D44, D46, D48, D50, D52)
+Bounce debouncer53 = Bounce();
 Bounce debouncer52 = Bounce();
 Bounce debouncer50 = Bounce();
 Bounce debouncer48 = Bounce();
@@ -19,6 +20,7 @@ Bounce debouncer24 = Bounce();
 Bounce debouncer22 = Bounce();
 
 // declares 16 buttons on D22 to D52 only on pair pin number (D22, D24, D26, D28, D30, D32, D34, D36, D38, D40, D42, D44, D46, D48, D50, D52) pin 22 is btn1 and pin 52 is btn16
+const int BTN_Layer = 53;
 const int BTN16 = 52;
 const int BTN15 = 50;
 const int BTN14 = 48;
@@ -36,11 +38,12 @@ const int BTN3 = 26;
 const int BTN2 = 24;
 const int BTN1 = 22;
 
-int bouton;
-
+int bouton = 0;
+int bouton_layer = 2;
 // fonction that contains the 16 buttons declaration
 void BTN_setup(void)
 {
+    debouncer53.attach(BTN_Layer, INPUT);
     debouncer52.attach(BTN16, INPUT);
     debouncer50.attach(BTN15, INPUT);
     debouncer48.attach(BTN14, INPUT);
@@ -58,26 +61,28 @@ void BTN_setup(void)
     debouncer24.attach(BTN2, INPUT);
     debouncer22.attach(BTN1, INPUT);
 
-    debouncer52.interval(2);
-    debouncer50.interval(2);
-    debouncer48.interval(2);
-    debouncer46.interval(2);
-    debouncer44.interval(2);
-    debouncer42.interval(2);
-    debouncer40.interval(2);
-    debouncer38.interval(2);
-    debouncer36.interval(2);
-    debouncer34.interval(2);
-    debouncer32.interval(2);
-    debouncer30.interval(2);
-    debouncer28.interval(2);
-    debouncer26.interval(2);
-    debouncer24.interval(2);
-    debouncer22.interval(2);
+    debouncer53.interval(5);
+    debouncer52.interval(5);
+    debouncer50.interval(5);
+    debouncer48.interval(5);
+    debouncer46.interval(5);
+    debouncer44.interval(5);
+    debouncer42.interval(5);
+    debouncer40.interval(5);
+    debouncer38.interval(5);
+    debouncer36.interval(5);
+    debouncer34.interval(5);
+    debouncer32.interval(5);
+    debouncer30.interval(5);
+    debouncer28.interval(5);
+    debouncer26.interval(5);
+    debouncer24.interval(5);
+    debouncer22.interval(5);
 }
 
 void BTN_I2C_Serial(void)
 {
+    debouncer53.update();
     debouncer52.update();
     debouncer50.update();
     debouncer48.update();
@@ -95,6 +100,27 @@ void BTN_I2C_Serial(void)
     debouncer24.update();
     debouncer22.update();
 
+    if (debouncer53.rose())
+    {
+        if (bouton_layer == 0)
+        {
+            bouton_layer = 2;
+            //Serial.println("Button layer 1 pressed");
+        }
+        if (bouton_layer == 2)
+        {
+            bouton_layer = 1;
+            Serial.println("Button layer 1 pressed");
+        }
+        else if (bouton_layer == 1)
+        {
+            bouton_layer = 0;
+            Serial.println("Button layer 0 released");
+        }
+        //bouton_layer = 1;
+        //Serial.println("Button layer pressed");
+        
+    }
     if (debouncer52.rose())
     {
         bouton = 16;
