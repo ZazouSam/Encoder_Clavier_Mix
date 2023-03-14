@@ -3,6 +3,6 @@
 
 void requestEvent()
 {
-    requestEventC();
-    requestEventE();
+    requestEventC();    //1 byte
+    requestEventE();    //7 bytes
 }

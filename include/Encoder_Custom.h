@@ -56,17 +56,17 @@ void encoder_setup(int btnPin1, int btnPin2, int btnPin3, int btnPin4, int btnPi
 {
     // pinMode(btnPin1, INPUT);
     debouncer27.attach(btnPin1, INPUT);
-    debouncer27.interval(5);
+    debouncer27.interval(2);
     debouncer33.attach(btnPin2, INPUT);
-    debouncer33.interval(5);
+    debouncer33.interval(2);
     debouncer39.attach(btnPin3, INPUT);
-    debouncer39.interval(5);
+    debouncer39.interval(2);
     debouncer45.attach(btnPin4, INPUT);
-    debouncer45.interval(5);
+    debouncer45.interval(2);
     debouncer51.attach(btnPin5, INPUT);
-    debouncer51.interval(5);
+    debouncer51.interval(2);
     debouncer10.attach(btnPin6, INPUT);
-    debouncer10.interval(5);
+    debouncer10.interval(2);
 }
 
 int boutonEncoder = 0;

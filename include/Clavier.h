@@ -58,22 +58,22 @@ void BTN_setup(void)
     debouncer24.attach(BTN2, INPUT);
     debouncer22.attach(BTN1, INPUT);
 
-    debouncer52.interval(5);
-    debouncer50.interval(5);
-    debouncer48.interval(5);
-    debouncer46.interval(5);
-    debouncer44.interval(5);
-    debouncer42.interval(5);
-    debouncer40.interval(5);
-    debouncer38.interval(5);
-    debouncer36.interval(5);
-    debouncer34.interval(5);
-    debouncer32.interval(5);
-    debouncer30.interval(5);
-    debouncer28.interval(5);
-    debouncer26.interval(5);
-    debouncer24.interval(5);
-    debouncer22.interval(5);
+    debouncer52.interval(2);
+    debouncer50.interval(2);
+    debouncer48.interval(2);
+    debouncer46.interval(2);
+    debouncer44.interval(2);
+    debouncer42.interval(2);
+    debouncer40.interval(2);
+    debouncer38.interval(2);
+    debouncer36.interval(2);
+    debouncer34.interval(2);
+    debouncer32.interval(2);
+    debouncer30.interval(2);
+    debouncer28.interval(2);
+    debouncer26.interval(2);
+    debouncer24.interval(2);
+    debouncer22.interval(2);
 }
 
 void BTN_I2C_Serial(void)
