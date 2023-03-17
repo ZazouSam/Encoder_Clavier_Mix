@@ -3,11 +3,11 @@
 #define NUM_ENCODERS 6
 
 Encoder encoders[NUM_ENCODERS] = {
-    Encoder(25, 23), // Encoder 1 pins
-    Encoder(31, 29), // Encoder 2 pins
-    Encoder(37, 35), // Encoder 3 pins
-    Encoder(43, 41), // Encoder 4 pins
-    Encoder(49, 47), // Encoder 5 pins
+    Encoder(24, 22), // Encoder 1 pins
+    Encoder(30, 28), // Encoder 2 pins
+    Encoder(36, 34), // Encoder 3 pins
+    Encoder(42, 40), // Encoder 4 pins
+    Encoder(48, 46), // Encoder 5 pins
     Encoder(9, 8),   // Encoder 6 pins
 };
 
@@ -45,26 +45,26 @@ void encoder_zero()
     oldPosition6 = encoders[5].read() / 4;
 }
 
-Bounce debouncer27 = Bounce();
-Bounce debouncer33 = Bounce();
-Bounce debouncer39 = Bounce();
-Bounce debouncer45 = Bounce();
-Bounce debouncer51 = Bounce();
+Bounce debouncer26 = Bounce();
+Bounce debouncer32 = Bounce();
+Bounce debouncer38 = Bounce();
+Bounce debouncer44 = Bounce();
+Bounce debouncer50 = Bounce();
 Bounce debouncer10 = Bounce();
 
 void encoder_setup(int btnPin1, int btnPin2, int btnPin3, int btnPin4, int btnPin5, int btnPin6)
 {
     // pinMode(btnPin1, INPUT);
-    debouncer27.attach(btnPin1, INPUT);
-    debouncer27.interval(2);
-    debouncer33.attach(btnPin2, INPUT);
-    debouncer33.interval(2);
-    debouncer39.attach(btnPin3, INPUT);
-    debouncer39.interval(2);
-    debouncer45.attach(btnPin4, INPUT);
-    debouncer45.interval(2);
-    debouncer51.attach(btnPin5, INPUT);
-    debouncer51.interval(2);
+    debouncer26.attach(btnPin1, INPUT);
+    debouncer26.interval(2);
+    debouncer32.attach(btnPin2, INPUT);
+    debouncer32.interval(2);
+    debouncer38.attach(btnPin3, INPUT);
+    debouncer38.interval(2);
+    debouncer44.attach(btnPin4, INPUT);
+    debouncer44.interval(2);
+    debouncer50.attach(btnPin5, INPUT);
+    debouncer50.interval(2);
     debouncer10.attach(btnPin6, INPUT);
     debouncer10.interval(2);
 }
@@ -73,33 +73,33 @@ int boutonEncoder = 0;
 
 void encoder_loop(void)
 {
-    debouncer27.update();
-    debouncer33.update();
-    debouncer39.update();
-    debouncer45.update();
-    debouncer51.update();
+    debouncer26.update();
+    debouncer32.update();
+    debouncer38.update();
+    debouncer44.update();
+    debouncer50.update();
     debouncer10.update();
-    if (debouncer27.fell())
+    if (debouncer26.fell())
     {
         boutonEncoder = 1;
         Serial.println("BTN1");
     }
-    if (debouncer33.fell())
+    if (debouncer32.fell())
     {
         boutonEncoder = 2;
         Serial.println("BTN2");
     }
-    if (debouncer39.fell())
+    if (debouncer38.fell())
     {
         boutonEncoder = 3;
         Serial.println("BTN3");
     }
-    if (debouncer45.fell())
+    if (debouncer44.fell())
     {
         boutonEncoder = 4;
         Serial.println("BTN4");
     }
-    if (debouncer51.fell())
+    if (debouncer50.fell())
     {
         boutonEncoder = 5;
         Serial.println("BTN5");
