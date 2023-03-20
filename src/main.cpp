@@ -8,7 +8,7 @@ void setup() {
   Serial.begin(115200);
   BTN_setup();
   encoder_zero();
-  encoder_setup(27, 33, 39, 45, 51, 10);
+  encoder_setup(26, 32, 38, 44, 50, 10);
 }
 
 void loop() {
