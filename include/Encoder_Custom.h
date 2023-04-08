@@ -71,7 +71,7 @@ void encoder_setup(int btnPin1, int btnPin2, int btnPin3, int btnPin4, int btnPi
 
 int boutonEncoder = 0;
 
-void encoder_loop(void)
+void encoder_loop_serial(void)
 {
     debouncer26.update();
     debouncer32.update();
@@ -241,6 +241,151 @@ void encoder_loop(void)
             Enc6 = -1;
             Serial.print("Count6: ");
             Serial.println(count6);
+            oldPosition6 = newPosition6;
+        }
+    }
+}
+
+void encoder_loop(void)
+{
+    debouncer26.update();
+    debouncer32.update();
+    debouncer38.update();
+    debouncer44.update();
+    debouncer50.update();
+    debouncer10.update();
+    if (debouncer26.fell())
+    {
+        boutonEncoder = 1;
+    }
+    if (debouncer32.fell())
+    {
+        boutonEncoder = 2;
+    }
+    if (debouncer38.fell())
+    {
+        boutonEncoder = 3;
+    }
+    if (debouncer44.fell())
+    {
+        boutonEncoder = 4;
+    }
+    if (debouncer50.fell())
+    {
+        boutonEncoder = 5;
+    }
+    if (debouncer10.fell())
+    {
+        boutonEncoder = 6;
+    }
+    // Read the current position of the encoder
+    long newPosition1 = encoders[0].read() / 4;
+    long newPosition2 = encoders[1].read() / 4;
+    long newPosition3 = encoders[2].read() / 4;
+    long newPosition4 = encoders[3].read() / 4;
+    long newPosition5 = encoders[4].read() / 4;
+    long newPosition6 = encoders[5].read() / 4;
+
+    // Only update if the position has changed
+    if (newPosition1 != oldPosition1)
+    {
+
+        // Check the direction of rotation
+        if (newPosition1 > oldPosition1)
+        {
+            count1++;
+            Enc1 = 1;
+            oldPosition1 = newPosition1;
+        }
+        else if (newPosition1 < oldPosition1)
+        {
+            count1--;
+            Enc1 = -1;
+            oldPosition1 = newPosition1;
+        }
+    }
+    if (newPosition2 != oldPosition2)
+    {
+
+        // Check the direction of rotation
+        if (newPosition2 > oldPosition2)
+        {
+            count2++;
+            Enc2 = 1;
+            oldPosition2 = newPosition2;
+        }
+        else if (newPosition2 < oldPosition2)
+        {
+            count2--;
+            Enc2 = -1;
+            oldPosition2 = newPosition2;
+        }
+    }
+    if (newPosition3 != oldPosition3)
+    {
+
+        // Check the direction of rotation
+        if (newPosition3 > oldPosition3)
+        {
+            count3++;
+            Enc3 = 1;
+            oldPosition3 = newPosition3;
+        }
+        else if (newPosition3 < oldPosition3)
+        {
+            count3--;
+            Enc3 = -1;
+            oldPosition3 = newPosition3;
+        }
+    }
+    if (newPosition4 != oldPosition4)
+    {
+
+        // Check the direction of rotation
+        if (newPosition4 > oldPosition4)
+        {
+            count4++;
+            Enc4 = 1;
+            oldPosition4 = newPosition4;
+        }
+        else if (newPosition4 < oldPosition4)
+        {
+            count4--;
+            Enc4 = -1;
+            oldPosition4 = newPosition4;
+        }
+    }
+    if (newPosition5 != oldPosition5)
+    {
+
+        // Check the direction of rotation
+        if (newPosition5 > oldPosition5)
+        {
+            count5++;
+            Enc5 = 1;
+            oldPosition5 = newPosition5;
+        }
+        else if (newPosition5 < oldPosition5)
+        {
+            count5--;
+            Enc5 = -1;
+            oldPosition5 = newPosition5;
+        }
+    }
+    if (newPosition6 != oldPosition6)
+    {
+
+        // Check the direction of rotation
+        if (newPosition6 > oldPosition6)
+        {
+            count6++;
+            Enc6 = 1;
+            oldPosition6 = newPosition6;
+        }
+        else if (newPosition6 < oldPosition6)
+        {
+            count6--;
+            Enc6 = -1;
             oldPosition6 = newPosition6;
         }
     }

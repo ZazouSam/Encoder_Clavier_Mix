@@ -12,6 +12,6 @@ void setup() {
 }
 
 void loop() {
-  BTN_I2C_Serial();
+  BTN_I2C();
   encoder_loop();
 }

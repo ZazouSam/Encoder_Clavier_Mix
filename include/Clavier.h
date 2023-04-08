@@ -1,8 +1,7 @@
 #include "BigBoyInclude.h"
 
-// declares 16 buttons on D23 to D53 only on odd pin number (D23, D25, D27, D29, D31, D33, D35, D37, D39, D41, D43, D45, D47, D49, D51, D53) pin 23 is btn1 and pin 53 is btn16
-Bounce debouncer52 = Bounce();      //btn layer
-Bounce debouncer53 = Bounce();      
+Bounce debouncer52 = Bounce(); // btn layer
+Bounce debouncer53 = Bounce();
 Bounce debouncer51 = Bounce();
 Bounce debouncer49 = Bounce();
 Bounce debouncer47 = Bounce();
@@ -19,7 +18,6 @@ Bounce debouncer27 = Bounce();
 Bounce debouncer25 = Bounce();
 Bounce debouncer23 = Bounce();
 
-// declares 16 buttons on D22 to D52 only on pair pin number (D22, D24, D26, D28, D30, D32, D34, D36, D38, D40, D42, D44, D46, D48, D50, D52) pin 22 is btn1 and pin 52 is btn16
 const int BTN_Layer = 52;
 const int BTN16 = 53;
 const int BTN15 = 51;
@@ -29,17 +27,18 @@ const int BTN12 = 45;
 const int BTN11 = 43;
 const int BTN10 = 41;
 const int BTN9 = 39;
-const int BTN8 = 37; 
-const int BTN7 = 35; 
-const int BTN6 = 33; 
-const int BTN5 = 31; 
-const int BTN4 = 29;     
-const int BTN3 = 27; 
-const int BTN2 = 25; 
-const int BTN1 = 23; 
+const int BTN8 = 37;
+const int BTN7 = 35;
+const int BTN6 = 33;
+const int BTN5 = 31;
+const int BTN4 = 29;
+const int BTN3 = 27;
+const int BTN2 = 25;
+const int BTN1 = 23;
 
-int bouton = 0;
-int bouton_layer = 2;
+uint8_t bouton = 0;
+uint8_t bouton_layer = 2;
+
 // fonction that contains the 16 buttons declaration
 void BTN_setup(void)
 {
@@ -105,7 +104,6 @@ void BTN_I2C_Serial(void)
         if (bouton_layer == 0)
         {
             bouton_layer = 2;
-            //Serial.println("Button layer 1 pressed");
         }
         if (bouton_layer == 2)
         {
@@ -117,9 +115,6 @@ void BTN_I2C_Serial(void)
             bouton_layer = 0;
             Serial.println("Button layer 0 released");
         }
-        //bouton_layer = 1;
-        //Serial.println("Button layer pressed");
-        
     }
     if (debouncer53.rose())
     {
@@ -205,6 +200,7 @@ void BTN_I2C_Serial(void)
 
 void BTN_I2C(void)
 {
+    debouncer53.update();
     debouncer52.update();
     debouncer51.update();
     debouncer49.update();
@@ -223,6 +219,21 @@ void BTN_I2C(void)
     debouncer23.update();
 
     if (debouncer52.rose())
+    {
+        if (bouton_layer == 0)
+        {
+            bouton_layer = 2;
+        }
+        if (bouton_layer == 2)
+        {
+            bouton_layer = 1;
+        }
+        else if (bouton_layer == 1)
+        {
+            bouton_layer = 0;
+        }
+    }
+    if (debouncer53.rose())
     {
         bouton = 16;
     }

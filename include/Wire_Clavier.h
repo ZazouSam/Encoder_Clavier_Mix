@@ -5,6 +5,7 @@ void requestEventC()
 {
   if (bouton_layer == 1)
   {
+
     Wire.write(0xA1);
   }
   else if (bouton_layer == 0)
