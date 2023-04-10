@@ -54,6 +54,8 @@ uint32_t adc;
 double pourcentage_batterie;
 int gain;
 
+int unite, dizaine;
+
 void setupBMS(void)
 {
     // ADC setup pin A0 Temp
@@ -164,5 +166,23 @@ void printBMS(void)
     Serial.print(" Vctotal: ");
     Serial.print(VCtotal);
     Serial.print(" pourcentage batterie: ");
-    Serial.println(pourcentage_batterie);
+    Serial.print(pourcentage_batterie);
+    dizaine = int(pourcentage_batterie)/10;
+    unite = int(pourcentage_batterie)%10;
+    Serial.print(" dizaine: ");
+    Serial.print(dizaine);
+    Serial.print(" unite: ");
+    Serial.print(unite);
+    dizaine = 0xD0 + dizaine;
+    Serial.print(" dizaineHexa: ");
+    Serial.print(dizaine);
+    unite = 0xC0 + unite;
+    Serial.print(" uniteHexa: ");
+    Serial.println(unite);
+}
+
+void requestEventBMS(void)
+{
+    Wire1.write(0xD0 + dizaine);
+    Wire1.write(0xC0 + unite);
 }
