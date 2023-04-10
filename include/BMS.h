@@ -108,49 +108,47 @@ void setupBMS(void)
 void BMS(void)
 {
     Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-    Wire1.write(0x10);
-    Wire1.endTransmission();
-    delayMicroseconds(500);
-    // delay(10);
-    adc = analogRead(A2);
+  Wire1.write(0x10);
+  Wire1.endTransmission();
+  delay(1);
+  adc = analogRead(A2);
 
-    VCOUT = adc * (3.3 / 4096.0) - Voffset;
-    VC1 = VCOUT / Gvcout;
-    // VC1 = ((VCOUT * GCref + OCvc1)/Gvcout)* (1 + GCvc1);
+  VCOUT = adc * (3.3 / 4096.0) - Voffset;
+  VC1 = VCOUT / Gvcout;
+  // VC1 = ((VCOUT * GCref + OCvc1)/Gvcout)* (1 + GCvc1);
 
-    Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-    Wire1.write(0x11);
-    Wire1.endTransmission();
-    // delay(10);
-    delayMicroseconds(500);
-    adc = analogRead(A2);
-    VCOUT = adc * (3.3 / 4096.0) - Voffset;
-    VC2 = VCOUT / Gvcout;
-    // VC2 = ((VCOUT * GCref + OCvc2) / Gvcout) * (1 + GCvc2);
+  Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+  Wire1.write(0x11);
+  Wire1.endTransmission();
+  delay(1);
 
-    Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-    Wire1.write(0x12);
-    Wire1.endTransmission();
-    // delay(10);
-    delayMicroseconds(500);
-    adc = analogRead(A2);
-    VCOUT = adc * (3.3 / 4096.0) - Voffset;
-    VC3 = VCOUT / Gvcout;
-    // VC3 = ((VCOUT * GCref + OCvc3) / Gvcout) * (1 + GCvc3);
+  adc = analogRead(A2);
+  VCOUT = adc * (3.3 / 4096.0) - Voffset;
+  VC2 = VCOUT / Gvcout;
+  // VC2 = ((VCOUT * GCref + OCvc2) / Gvcout) * (1 + GCvc2);
 
-    Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-    Wire1.write(0x13);
-    Wire1.endTransmission();
-    // delay(10);
-    delayMicroseconds(500);
-    adc = analogRead(A2);
-    VCOUT = adc * (3.3 / 4096.0) - Voffset;
-    VC4 = VCOUT / Gvcout;
-    // VC4 = ((VCOUT * GCref + OCvc4) / Gvcout) * (1 + GCvc4);
-    // delay(10);
-    delayMicroseconds(500);
-    VCtotal = VC1 + VC2 + VC3 + VC4;
-    pourcentage_batterie = (VCtotal - B_MIN) / (B_MAX - B_MIN) * 100;
+  Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+  Wire1.write(0x12);
+  Wire1.endTransmission();
+  delay(1);
+
+  adc = analogRead(A2);
+  VCOUT = adc * (3.3 / 4096.0) - Voffset;
+  VC3 = VCOUT / Gvcout;
+  // VC3 = ((VCOUT * GCref + OCvc3) / Gvcout) * (1 + GCvc3);
+
+  Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+  Wire1.write(0x13);
+  Wire1.endTransmission();
+  delay(1);
+
+  adc = analogRead(A2);
+  VCOUT = adc * (3.3 / 4096.0) - Voffset;
+  VC4 = VCOUT / Gvcout;
+  // VC4 = ((VCOUT * GCref + OCvc4) / Gvcout) * (1 + GCvc4);
+  delay(1);
+  VCtotal = VC1 + VC2 + VC3 + VC4;
+  pourcentage_batterie = (VCtotal - B_MIN) / (B_MAX - B_MIN) * 100;
 }
 
 void printBMS(void)
