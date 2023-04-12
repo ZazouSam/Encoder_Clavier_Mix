@@ -183,6 +183,6 @@ void printBMS(void)
 
 void requestEventBMS(void)
 {
-    Wire1.write(0xD0 + dizaine);
-    Wire1.write(0xC0 + unite);
+    Wire.write(0xD0 + dizaine);
+    Wire.write(0xC0 + unite);
 }
