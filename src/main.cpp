@@ -14,23 +14,23 @@ void setup()
   BTN_setup();
   encoder_zero();
   encoder_setup(26, 32, 38, 44, 50, 10);
-  setupBMS();
+  //setupBMS();
 }
 
 void loop()
 {
   BTN_I2C();
   encoder_loop();
-  BMS();
-  // peut-etre mettre un delay pour ne pas surcharger le bus I2C
-  // if (millis() - lastChristmas >= 10)
+  // BMS();
+  // // peut-etre mettre un delay pour ne pas surcharger le bus I2C
+  // // if (millis() - lastChristmas >= 10)
+  // // {
+  // //   lastChristmas = millis();
+  // // }
+  // // Check if 500ms have elapsed since last print time
+  // if (millis() - lastPrintTime >= 250)
   // {
-  //   lastChristmas = millis();
+  //   printBMS();
+  //   lastPrintTime = millis(); // update last print time
   // }
-  // Check if 500ms have elapsed since last print time
-  if (millis() - lastPrintTime >= 250)
-  {
-    printBMS();
-    lastPrintTime = millis(); // update last print time
-  }
 }
