@@ -21,15 +21,36 @@ void loop()
   BTN_I2C();
   encoder_loop();
   BMS();
+  
   // peut-etre mettre un delay pour ne pas surcharger le bus I2C
-  // if (millis() - lastChristmas >= 10)
-  // {
-  //   lastChristmas = millis();
-  // }
+  if (millis() - lastChristmas >= 10 && millis() - lastChristmas < 20)
+  {
+    cell_select = 1;
+  }
+  else if (millis() - lastChristmas >= 20 && millis() - lastChristmas < 30)
+  {
+    cell_select = 2;
+  }
+  else if (millis() - lastChristmas >= 30 && millis() - lastChristmas < 40)
+  {
+    cell_select = 3;
+  }
+  else if (millis() - lastChristmas >= 40 && millis() - lastChristmas < 50)
+  {
+    cell_select = 4;
+  }
+  else if (millis() - lastChristmas >= 50) //I gave you my heart but the very next day you gave it away
+  {
+    cell_select = 0;
+    lastChristmas = millis();
+  }
+
+
+
   // Check if 500ms have elapsed since last print time
   if (millis() - lastPrintTime >= 250)
   {
-    printBMS();
+    //printBMS();
     lastPrintTime = millis(); // update last print time
   }
 }

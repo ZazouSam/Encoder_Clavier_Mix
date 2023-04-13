@@ -50,11 +50,12 @@ double VC1, VC2, VC3, VC4;
 double Vref;
 
 double VCtotal;
-uint32_t adc;
+uint32_t adc1, adc2, adc3, adc4, adc5, adc6;
 double pourcentage_batterie;
 int gain;
 
 int unite, dizaine;
+int cell_select = 0;
 
 void setupBMS(void)
 {
@@ -109,48 +110,62 @@ void setupBMS(void)
 
 void BMS(void)
 {
-    Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-  Wire1.write(0x10);
-  Wire1.endTransmission();
-  delay(1);
-  adc = analogRead(A2);
+    if (cell_select == 1)
+    {
+        Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+        Wire1.write(0x10);
+        Wire1.endTransmission();
+    // delay(1);
+    adc1 = analogRead(A2);
+    }
+    
+    VCOUT = adc1 * (3.3 / 4096.0) - Voffset;
+    VC1 = VCOUT / Gvcout;
 
-  VCOUT = adc * (3.3 / 4096.0) - Voffset;
-  VC1 = VCOUT / Gvcout;
-  // VC1 = ((VCOUT * GCref + OCvc1)/Gvcout)* (1 + GCvc1);
+    
+    // VC1 = ((VCOUT * GCref + OCvc1)/Gvcout)* (1 + GCvc1);
+    if (cell_select == 2)
+    {
+        Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+        Wire1.write(0x11);
+        Wire1.endTransmission();
+    // delay(1);
+    adc2 = analogRead(A2);
+    }
 
-  Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-  Wire1.write(0x11);
-  Wire1.endTransmission();
-  delay(1);
+    
+    VCOUT = adc2 * (3.3 / 4096.0) - Voffset;
+    VC2 = VCOUT / Gvcout;
+    // VC2 = ((VCOUT * GCref + OCvc2) / Gvcout) * (1 + GCvc2);
 
-  adc = analogRead(A2);
-  VCOUT = adc * (3.3 / 4096.0) - Voffset;
-  VC2 = VCOUT / Gvcout;
-  // VC2 = ((VCOUT * GCref + OCvc2) / Gvcout) * (1 + GCvc2);
+    if (cell_select == 3)
+    {
+        Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+        Wire1.write(0x12);
+        Wire1.endTransmission();
+    // delay(1);
+    adc3 = analogRead(A2);
+    }
 
-  Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-  Wire1.write(0x12);
-  Wire1.endTransmission();
-  delay(1);
+    
+    VCOUT = adc3 * (3.3 / 4096.0) - Voffset;
+    VC3 = VCOUT / Gvcout;
+    // VC3 = ((VCOUT * GCref + OCvc3) / Gvcout) * (1 + GCvc3);
+    if (cell_select == 4)
+    {
+        Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
+        Wire1.write(0x13);
+        Wire1.endTransmission();
+    // delay(1);
+    adc4 = analogRead(A2);
+    }
 
-  adc = analogRead(A2);
-  VCOUT = adc * (3.3 / 4096.0) - Voffset;
-  VC3 = VCOUT / Gvcout;
-  // VC3 = ((VCOUT * GCref + OCvc3) / Gvcout) * (1 + GCvc3);
-
-  Wire1.beginTransmission((I2C_GROUP_ADDR << 3) + CELL_CTL);
-  Wire1.write(0x13);
-  Wire1.endTransmission();
-  delay(1);
-
-  adc = analogRead(A2);
-  VCOUT = adc * (3.3 / 4096.0) - Voffset;
-  VC4 = VCOUT / Gvcout;
-  // VC4 = ((VCOUT * GCref + OCvc4) / Gvcout) * (1 + GCvc4);
-  delay(1);
-  VCtotal = VC1 + VC2 + VC3 + VC4;
-  pourcentage_batterie = (VCtotal - B_MIN) / (B_MAX - B_MIN) * 100;
+    
+    VCOUT = adc4 * (3.3 / 4096.0) - Voffset;
+    VC4 = VCOUT / Gvcout;
+    // VC4 = ((VCOUT * GCref + OCvc4) / Gvcout) * (1 + GCvc4);
+    VCtotal = VC1 + VC2 + VC3 + VC4;
+    pourcentage_batterie = (VCtotal - B_MIN) / (B_MAX - B_MIN) * 100;
 }
 
 void printBMS(void)
@@ -166,19 +181,7 @@ void printBMS(void)
     Serial.print(" Vctotal: ");
     Serial.print(VCtotal);
     Serial.print(" pourcentage batterie: ");
-    Serial.print(pourcentage_batterie);
-    dizaine = int(pourcentage_batterie)/10;
-    unite = int(pourcentage_batterie)%10;
-    Serial.print(" dizaine: ");
-    Serial.print(dizaine);
-    Serial.print(" unite: ");
-    Serial.print(unite);
-    dizaine = 0xD0 + dizaine;
-    Serial.print(" dizaineHexa: ");
-    Serial.print(dizaine);
-    unite = 0xC0 + unite;
-    Serial.print(" uniteHexa: ");
-    Serial.println(unite);
+    Serial.println(pourcentage_batterie);
 }
 
 void requestEventBMS(void)
