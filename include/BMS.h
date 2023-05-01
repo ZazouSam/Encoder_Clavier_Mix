@@ -54,6 +54,9 @@ uint32_t adc1, adc2, adc3, adc4, adc5, adc6;
 double pourcentage_batterie;
 int gain;
 
+int val;
+float voltage;
+
 int unite, dizaine;
 int cell_select = 0;
 
@@ -165,7 +168,8 @@ void BMS(void)
     VC4 = VCOUT / Gvcout;
     // VC4 = ((VCOUT * GCref + OCvc4) / Gvcout) * (1 + GCvc4);
     VCtotal = VC1 + VC2 + VC3 + VC4;
-    pourcentage_batterie = (VCtotal - B_MIN) / (B_MAX - B_MIN) * 100;
+    pourcentage_batterie = -9.1664*VCtotal*VCtotal + 330.69*VCtotal - 2868.2;
+    //pourcentage_batterie = (VCtotal - B_MIN) / (B_MAX - B_MIN) * 100;
 }
 
 void printBMS(void)
@@ -186,6 +190,12 @@ void printBMS(void)
 
 void requestEventBMS(void)
 {
+    dizaine = pourcentage_batterie / 10;
+    unite = pourcentage_batterie - (dizaine * 10);
     Wire.write(0xD0 + dizaine);
     Wire.write(0xC0 + unite);
+    // Serial.print("dizaine: ");
+    // Serial.print(dizaine);
+    // Serial.print(" unite: ");
+    // Serial.println(unite);
 }

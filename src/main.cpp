@@ -21,7 +21,11 @@ void loop()
   BTN_I2C();
   encoder_loop();
   BMS();
-  
+  // uint32_t valtemp1 = adc_get_channel_value(ADC, ADC_CHANNEL_0);
+  // uint32_t valtemp2 = adc_get_channel_value(ADC, ADC_CHANNEL_1);
+  // val = valtemp1 - valtemp2;
+  // voltage = val * 3.3;
+  // voltage /= 4095.0;
   // peut-etre mettre un delay pour ne pas surcharger le bus I2C
   if (millis() - lastChristmas >= 10 && millis() - lastChristmas < 20)
   {
